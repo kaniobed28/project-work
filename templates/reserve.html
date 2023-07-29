@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Reserved Items</h1>
+  
+  <div class="card-container">
+    {% for item in reserved_items %}
+      <div class="card">
+        <img class="card-image" src="{{ item.picture }}" alt="Item Image">
+        <div class="card-content">
+          <h3 class="card-title">{{ item.name }}</h3>
+          <p class="card-description">{{ item.description }}</p>
+          <p class="card-price">${{ item.price }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -72,6 +72,14 @@
                 <input type="text" id="username" name="username" required>
             </div>
             <div>
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
@@ -91,6 +99,12 @@
         <a href="#">Signup with Facebook</a>
         
         <!-- Additional signup options can be added here -->
+    </div>
+
+    <!-- Add the Login link below the signup form -->
+    <div class="container">
+        <h3>Already have an account?</h3>
+        <a href="{{ url_for('login') }}">Login</a>
     </div>
 </body>
 </html>

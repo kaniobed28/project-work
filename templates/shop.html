@@ -1,13 +1,90 @@
 {% extends 'base.html' %}
+
 {% block content %}
-      <div class="card">
-        <img class="card-image" src="path/to/image.jpg" alt="Item Image">
-        <div class="card-content">
-          <h3 class="card-title">Item Name</h3>
-          <p class="card-description">Item description goes here...</p>
-          <p class="card-price">$99.99</p>
-          <button class="card-button">Add to Cart</button>
-        </div>
+<div class="filter-container">
+  <form action="{{ url_for('shop') }}" method="post">
+    <div class="filter-group">
+      <label for="item_name">Item Name:</label>
+      <input type="text" id="item_name" name="item_name">
+    </div>
+    <div class="filter-group">
+      <label for="hostel">Hostel:</label>
+      <select id="hostel" name="hostel">
+        <option value="" selected disabled>Select a hostel</option>
+        <option value="Hostel A">Hostel A</option>
+        <option value="Hostel B">Hostel B</option>
+        <option value="Hostel C">Hostel C</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <input type="submit" value="Filter" class="filter-button">
+    </div>
+  </form>
+</div>
+
+<div class="card-container">
+  {% for item in items %}
+    <div class="card">
+      <img class="card-image" src="{{ item.picture }}" alt="Item Image">
+      <div class="card-content">
+        <h3 class="card-title">{{ item.name }}</h3>
+        <p class="card-description">{{ item.description }}</p>
+        <p class="card-price">${{ item.price }}</p>
+        <button class="card-button" onclick="showOwnerInfo('{{ item.user.username }}', '{{ item.user.phone }}')">Contact Owner</button>
+
+        <!-- <br>
+        <button class="card-button">Buy Item</button> -->
       </div>
-      {% endblock %}
-      
+    </div>
+  {% endfor %}
+</div>
+
+<!-- The Modal -->
+<div id="ownerModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="ownerModalTitle">Owner Information</h3>
+    <p id="ownerModalInfo"></p>
+  </div>
+</div>
+
+<script>
+  function showOwnerInfo(username, phone) {
+    // Get the modal
+    var modal = document.getElementById("ownerModal");
+    
+    // Get the <span> element that closes the modal
+    var span = modal.getElementsByClassName("close")[0];
+    
+    // Get the <h3> element to display owner username and phone number
+    var ownerModalTitle = document.getElementById("ownerModalTitle");
+    ownerModalTitle.innerHTML = "Owner Information: " + username;
+    
+    // Get the <p> element to display owner phone number
+    var ownerModalInfo = document.getElementById("ownerModalInfo");
+    ownerModalInfo.innerHTML = "Phone: " + phone;
+    
+    // Display the modal
+    modal.style.display = "block";
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  }
+
+  function closeModal() {
+    var modal = document.getElementById("ownerModal");
+    modal.style.display = "none";
+  }
+</script>
+
+{% endblock %}
